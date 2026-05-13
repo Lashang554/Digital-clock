@@ -1,203 +1,259 @@
-*{
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-    box-sizing: border-box;
-}
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-@keyframes glow {
-    0%, 100% {
-        text-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.5);
-    }
-    50% {
-        text-shadow: 0 0 30px rgba(0, 255, 255, 1), 0 0 60px rgba(0, 255, 255, 0.7);
-    }
-}
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0px);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
-}
-.hero{
-    width: 100%;
-    min-height: 100vh;
-    background: linear-gradient(45deg, #08001f, green);
-    color: #fff;
-    position: relative;
-}
-.container{
-    width: 800px;
-    height: 180px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    animation: fadeIn 0.8s ease-out;
-}
-.clock{
-    width: 100%;
-    height: 100%;
-    background: rgba(235, 0, 255, 0.11);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(40px);
-    border: 2px solid rgba(100, 200, 255, 0.3);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-}
-.container::before{
-    content: '';
-    width: 180px;
-    height: 180px;
-    background: #f41b75;
-    border-radius: 5px;
-    position: absolute;
-    left: -50px;
-    top: -50px;
-    z-index: -1;
-}
-.container::after{
-    content: '';
-    width: 180px;
-    height: 180px;
-    background: blue;
-    border-radius: 50%;
-    position: absolute;
-    right: -30px;
-    bottom: -50px;
-    z-index: -1;
-}
-.clock span{
-    font-size: 90px;
-    width: 120px;
-    display: inline-block;
-    text-align: center;
-    position: relative;
-    font-weight: 700;
-    letter-spacing: 4px;
-    color: #00ffff;
-    text-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.5);
-    animation: glow 2s ease-in-out infinite;
-    transition: all 0.3s ease;
-}
-.clock span::after{
-    font-size: 14px;
-    position: absolute;
-    bottom: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-weight: 500;
-    letter-spacing: 2px;
-    color: #64c8ff;
-}
-#hrs::after{
-    content: 'Hours';
+/* ============================================================
+   CSS Custom Properties — edit these to retheme the entire clock
+   ============================================================ */
+:root {
+  --color-bg-start:        #08001f;
+  --color-bg-end:          #003320;
+  --color-glass-bg:        rgba(255, 255, 255, 0.05);
+  --color-glass-border:    rgba(100, 200, 255, 0.25);
+  --color-digit:           #00ffff;
+  --color-digit-glow:      rgba(0, 255, 255, 0.65);
+  --color-label:           rgba(100, 200, 255, 0.75);
+  --color-ampm:            #ff006e;
+  --color-ampm-glow:       rgba(255, 0, 110, 0.65);
+  --color-orb-left:        #f41b75;
+  --color-orb-right:       #1a00ff;
+  --color-shadow:          rgba(0, 0, 0, 0.45);
 
-}
-#min::after{
-    content: 'Mins';
-    
-}
-#sec::after{
-    content: 'Sec';
-    
-}
-#ampm{
-    font-size: 30px;
-    margin-left: 20px;
-    color: #ff006e;
-    text-shadow: 0 0 15px rgba(255, 0, 110, 0.8);
-    font-weight: 800;
+  --font-clock: 'Poppins', sans-serif;
+
+  --transition-digit: 0.25s ease;
+  --radius-card:      12px;
+  --radius-orb-left:  6px;
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .container {
-        width: 600px;
-        height: 140px;
-    }
-    .clock span {
-        font-size: 70px;
-        width: 90px;
-    }
+/* ============================================================
+   Reset
+   ============================================================ */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@media (max-width: 768px) {
-    .container {
-        width: 90%;
-        max-width: 500px;
-        height: 120px;
-    }
-    .clock span {
-        font-size: 50px;
-        width: 70px;
-        letter-spacing: 2px;
-    }
-    #ampm {
-        font-size: 20px;
-        margin-left: 15px;
-    }
-    .clock span::after {
-        font-size: 12px;
-        bottom: -25px;
-    }
-    .container::before {
-        width: 120px;
-        height: 120px;
-        left: -40px;
-        top: -40px;
-    }
-    .container::after {
-        width: 120px;
-        height: 120px;
-        right: -20px;
-        bottom: -40px;
-    }
+/* ============================================================
+   Keyframes
+   ============================================================ */
+@keyframes fadeScaleIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
 }
 
+@keyframes digitGlow {
+  0%, 100% {
+    text-shadow:
+      0 0 18px var(--color-digit-glow),
+      0 0 36px var(--color-digit-glow);
+  }
+  50% {
+    text-shadow:
+      0 0 28px var(--color-digit-glow),
+      0 0 56px var(--color-digit-glow),
+      0 0 80px rgba(0, 255, 255, 0.3);
+  }
+}
+
+@keyframes ampmPulse {
+  0%, 100% {
+    text-shadow: 0 0 14px var(--color-ampm-glow);
+  }
+  50% {
+    text-shadow:
+      0 0 22px var(--color-ampm-glow),
+      0 0 44px var(--color-ampm-glow);
+  }
+}
+
+/* ============================================================
+   Hero / Page
+   ============================================================ */
+.hero {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-start) 0%,
+    var(--color-bg-end) 100%
+  );
+  color: #fff;
+  font-family: var(--font-clock);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ============================================================
+   Container
+   ============================================================ */
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(300px, 80vw, 820px);
+  height: clamp(100px, 22vw, 190px);
+  animation: fadeScaleIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Decorative orbs */
+.container::before,
+.container::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  filter: blur(2px);
+}
+
+.container::before {
+  width: clamp(80px, 15vw, 180px);
+  height: clamp(80px, 15vw, 180px);
+  background: var(--color-orb-left);
+  border-radius: var(--radius-orb-left);
+  top: -40px;
+  left: -40px;
+  opacity: 0.85;
+}
+
+.container::after {
+  width: clamp(80px, 15vw, 180px);
+  height: clamp(80px, 15vw, 180px);
+  background: var(--color-orb-right);
+  border-radius: 50%;
+  bottom: -40px;
+  right: -25px;
+  opacity: 0.85;
+}
+
+/* ============================================================
+   Clock card
+   ============================================================ */
+.clock {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(4px, 1.5vw, 16px);
+
+  background: var(--color-glass-bg);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid var(--color-glass-border);
+  border-radius: var(--radius-card);
+  box-shadow:
+    0 8px 40px var(--color-shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+/* ============================================================
+   Digit segments (hrs / min / sec)
+   ============================================================ */
+.clock span {
+  font-size: clamp(32px, 9vw, 92px);
+  font-weight: 700;
+  width: clamp(46px, 11vw, 122px);
+  letter-spacing: clamp(1px, 0.5vw, 5px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: var(--color-digit);
+  animation: digitGlow 2.4s ease-in-out infinite;
+  transition:
+    color var(--transition-digit),
+    text-shadow var(--transition-digit);
+
+  /* Subtle top-border accent above each digit group */
+  padding-bottom: clamp(18px, 4vw, 36px);
+}
+
+/* Label underneath each digit */
+.clock span::after {
+  content: attr(data-label);     /* set via JS: element.dataset.label = 'Hours' */
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: clamp(9px, 1.2vw, 13px);
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-label);
+  white-space: nowrap;
+  animation: none;          /* labels don't glow */
+}
+
+/* Fallback labels if data-label is not set via JS */
+#hrs::after  { content: 'Hours'; }
+#min::after  { content: 'Mins';  }
+#sec::after  { content: 'Sec';   }
+
+/* Separator colon */
+.clock span:not(#ampm)::before {
+  display: none;            /* colons are best rendered in HTML as separate elements */
+}
+
+/* ============================================================
+   AM / PM badge
+   ============================================================ */
+#ampm {
+  font-size: clamp(14px, 2.8vw, 30px);
+  font-weight: 800;
+  width: auto;
+  letter-spacing: 0.05em;
+  padding-bottom: 0;
+  color: var(--color-ampm);
+  animation: ampmPulse 2.4s ease-in-out infinite;
+  align-self: center;
+  margin-left: clamp(6px, 1.5vw, 18px);
+}
+
+#ampm::after { content: none; }  /* no label needed under AM/PM */
+
+/* ============================================================
+   Separator (add <span class="sep">:</span> in HTML)
+   ============================================================ */
+.sep {
+  font-size: clamp(28px, 7vw, 80px);
+  font-weight: 700;
+  color: var(--color-digit);
+  opacity: 0.5;
+  width: auto !important;
+  padding-bottom: 0 !important;
+  animation: none !important;
+  align-self: center;
+  margin-bottom: clamp(12px, 3vw, 24px);
+}
+
+/* ============================================================
+   Responsive fine-tuning
+   (clamp() handles most scaling; these fix edge cases)
+   ============================================================ */
 @media (max-width: 480px) {
-    .container {
-        width: 95%;
-        max-width: 350px;
-        height: 100px;
-    }
-    .clock span {
-        font-size: 35px;
-        width: 50px;
-        letter-spacing: 1px;
-    }
-    #ampm {
-        font-size: 16px;
-        margin-left: 10px;
-    }
-    .clock span::after {
-        font-size: 10px;
-        bottom: -20px;
-    }
-    .container::before,
-    .container::after {
-        width: 80px;
-        height: 80px;
-    }
-    .container::before {
-        left: -30px;
-        top: -30px;
-    }
-    .container::after {
-        right: -15px;
-        bottom: -30px;
-    }
+  .container::before {
+    top: -30px;
+    left: -30px;
+  }
+  .container::after {
+    bottom: -30px;
+    right: -15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clock span,
+  #ampm {
+    animation: none;
+  }
+  .container {
+    animation: none;
+    transform: translate(-50%, -50%);
+  }
 }
