@@ -52,19 +52,25 @@
     z-index: -1;
 }
 .clock span{
-    font-size: 80px;
-    width: 110px;
+    font-size: 90px;
+    width: 120px;
     display: inline-block;
     text-align: center;
     position: relative;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: #00ffff;
+    text-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.5);
 }
 .clock span::after{
-   
-    font-size: 16px;
+    font-size: 14px;
     position: absolute;
-    bottom: -5px;
+    bottom: -30px;
     left: 50%;
     transform: translateX(-50%);
+    font-weight: 500;
+    letter-spacing: 2px;
+    color: #64c8ff;
 }
 #hrs::after{
     content: 'Hours';
@@ -77,4 +83,11 @@
 #sec::after{
     content: 'Sec';
     
+}
+#ampm{
+    font-size: 30px;
+    margin-left: 20px;
+    color: #ff006e;
+    text-shadow: 0 0 15px rgba(255, 0, 110, 0.8);
+    font-weight: 800;
 }
