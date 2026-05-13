@@ -122,3 +122,82 @@
     text-shadow: 0 0 15px rgba(255, 0, 110, 0.8);
     font-weight: 800;
 }
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .container {
+        width: 600px;
+        height: 140px;
+    }
+    .clock span {
+        font-size: 70px;
+        width: 90px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        max-width: 500px;
+        height: 120px;
+    }
+    .clock span {
+        font-size: 50px;
+        width: 70px;
+        letter-spacing: 2px;
+    }
+    #ampm {
+        font-size: 20px;
+        margin-left: 15px;
+    }
+    .clock span::after {
+        font-size: 12px;
+        bottom: -25px;
+    }
+    .container::before {
+        width: 120px;
+        height: 120px;
+        left: -40px;
+        top: -40px;
+    }
+    .container::after {
+        width: 120px;
+        height: 120px;
+        right: -20px;
+        bottom: -40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 95%;
+        max-width: 350px;
+        height: 100px;
+    }
+    .clock span {
+        font-size: 35px;
+        width: 50px;
+        letter-spacing: 1px;
+    }
+    #ampm {
+        font-size: 16px;
+        margin-left: 10px;
+    }
+    .clock span::after {
+        font-size: 10px;
+        bottom: -20px;
+    }
+    .container::before,
+    .container::after {
+        width: 80px;
+        height: 80px;
+    }
+    .container::before {
+        left: -30px;
+        top: -30px;
+    }
+    .container::after {
+        right: -15px;
+        bottom: -30px;
+    }
+}
